@@ -74,6 +74,9 @@ public class CustomInventory implements Listener {
                         .append(Component.text(status).decoration(TextDecoration.BOLD, true)),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text(note).color(NamedTextColor.LIGHT_PURPLE)),
+                Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("Fortune enchantments will").color(NamedTextColor.DARK_BLUE)),
+                Component.text("   multiply the drop chances!").color(NamedTextColor.DARK_BLUE),
                 Component.empty()));
 
         return itemMeta;
