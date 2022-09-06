@@ -21,20 +21,16 @@ public class PlayerSettings {
         playerSettings.put(Material.EMERALD, false);
     }
 
-    public boolean getPlayerSetting(Material material) {
+    public boolean getSetting(Material material) {
         return playerSettings.getOrDefault(material, false);
     }
 
-    public void setPlayerSetting(Material material, boolean enabled) {
-        if (playerSettings.containsKey(material)) {
-            playerSettings.replace(material, enabled);
-        }
+    public void setSetting(Material material, boolean enabled) {
+        playerSettings.replace(material, enabled);
     }
 
     @Override
     public String toString() {
-        return "Settings{" +
-                "playerSettings=" + playerSettings +
-                '}';
+        return "Settings{" + "playerSettings=" + playerSettings + '}';
     }
 }

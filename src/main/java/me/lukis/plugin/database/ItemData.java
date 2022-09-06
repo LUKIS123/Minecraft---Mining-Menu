@@ -10,6 +10,8 @@ public class ItemData {
     private static final Map<Material, Double> itemInfo = new LinkedHashMap<>();
 
     public static @NotNull Map<Material, Double> getItemInfo(int fortuneRatio) {
+        fortuneRatio += 1;
+
         itemInfo.put(Material.EMERALD, 0.005 * (double) fortuneRatio);
         itemInfo.put(Material.DIAMOND, 0.01 * (double) fortuneRatio);
         itemInfo.put(Material.GOLD_INGOT, 0.02 * (double) fortuneRatio);

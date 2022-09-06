@@ -37,12 +37,7 @@ public class BlockBreak implements Listener {
         Block block = event.getBlock();
 
         // setting drop chances
-        Map<Enchantment, Integer> enchantments = player.getInventory().getItemInMainHand().getEnchantments();
-        if (enchantments.containsKey(Enchantment.LOOT_BONUS_BLOCKS)) {
-            setChances(enchantments.get(Enchantment.LOOT_BONUS_BLOCKS));
-        } else {
-            chances = ItemData.getItemInfo(1);
-        }
+        chances = ItemData.getItemInfo(player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0));
 
         if (stoneLike.contains(block.getType()) &&
                 player.getInventory().getItemInMainHand().getType().toString().toLowerCase().contains("pickaxe")) {
@@ -53,7 +48,7 @@ public class BlockBreak implements Listener {
             PlayerSettings playerSettings = repo.getPlayerSettings(player.getName());
 
             for (Map.Entry<Material, Double> entry : chances.entrySet()) {
-                if (playerSettings.getPlayerSetting(entry.getKey()) && (random.nextInt(1000) + 1) / 1000.0 <= entry.getValue()) {
+                if (playerSettings.getSetting(entry.getKey()) && (random.nextInt(1000) + 1) / 1000.0 <= entry.getValue()) {
 
                     if (entry.getKey().equals(Material.COBBLESTONE)) {
                         dropItem(player, block, block.getDrops().iterator().next());
@@ -71,9 +66,5 @@ public class BlockBreak implements Listener {
         if (!rejectedItems.isEmpty()) {
             block.getWorld().dropItemNaturally(block.getLocation(), itemStack);
         }
-    }
-
-    private void setChances(Integer fortuneLevel) {
-        chances = ItemData.getItemInfo(fortuneLevel + 1);
     }
 }

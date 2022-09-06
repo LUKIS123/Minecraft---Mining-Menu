@@ -25,21 +25,14 @@ public class DropMenuCommands implements Listener, CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (command.getName().equalsIgnoreCase(cmd1)) {
-                CustomInventory i = new CustomInventory(plugin, repo, player);
 
-                // checking if player has fortune enchantment and opening inventory
-                if (player.getInventory().getItemInMainHand().getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS)) {
-                    player.openInventory(i.createInventoryMenu(player.getInventory().getItemInMainHand().getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS) + 1));
-                } else {
-                    player.openInventory(i.createInventoryMenu(1));
-                }
-                return true;
-            }
+            CustomInventory i = new CustomInventory(plugin, repo, player);
+            // checking if player has fortune enchantment and opening inventory
+            player.openInventory(i.createInventoryMenu(player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0)));
+
         } else {
             sender.sendMessage(ChatColor.RED + "Only players can use this command!");
-            return true;
         }
-        return false;
+        return true;
     }
 }

@@ -55,7 +55,7 @@ public class CustomInventory implements Listener {
 
         String status;
         String note;
-        if (repo.getPlayerSettings(player.getName()).getPlayerSetting(material.getType())) {
+        if (repo.getPlayerSettings(player.getName()).getSetting(material.getType())) {
             status = ChatColor.GREEN + "Enabled";
             note = "Right-Click to disable";
         } else {
@@ -80,7 +80,7 @@ public class CustomInventory implements Listener {
     }
 
     // updating the inventory menu
-    public void getUpdatedInventory(@NotNull Inventory inventory, Integer fortuneRatio) {
+    public void refreshInventoryMenu(@NotNull Inventory inventory, Integer fortuneRatio) {
         inventory.clear();
         inventory.setContents(this.createInventoryMenu(fortuneRatio).getContents());
     }

@@ -47,15 +47,11 @@ public class MenuActions implements Listener {
             updatePlayerSettings(player, itemStack, clickType);
 
             // refreshing the inventory menu
-            if (player.getInventory().getItemInMainHand().getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS)) {
-                customInventory.getUpdatedInventory(inventory, player.getInventory().getItemInMainHand().getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS) + 1);
-            } else {
-                customInventory.getUpdatedInventory(inventory, 1);
-            }
+            customInventory.refreshInventoryMenu(inventory, player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0));
         }
     }
 
     private void updatePlayerSettings(@NotNull Player player, @NotNull ItemStack itemStack, @NotNull ClickType clickType) {
-        repo.getPlayerSettings(player.getName()).setPlayerSetting(itemStack.getType(), !clickType.isRightClick());
+        repo.getPlayerSettings(player.getName()).setSetting(itemStack.getType(), !clickType.isRightClick());
     }
 }
