@@ -15,7 +15,7 @@ public class Plugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getCommand(dropMenuCommands.cmd1).setExecutor(dropMenuCommands);
+        getCommand("drop").setExecutor(dropMenuCommands);
 
         getServer().getPluginManager().registerEvents(new MenuActions(settingsRepository, this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(settingsRepository), this);

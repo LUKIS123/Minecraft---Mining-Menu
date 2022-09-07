@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 public class DropMenuCommands implements Listener, CommandExecutor {
-    public final String cmd1 = "drop";
+
     private final Plugin plugin;
     private final SettingsRepository repo;
 
