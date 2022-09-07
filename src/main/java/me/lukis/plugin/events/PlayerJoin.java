@@ -5,10 +5,10 @@ import me.lukis.plugin.database.SettingsRepository;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class PlayerJoinEvent implements Listener {
+public class PlayerJoin implements Listener {
     private final SettingsRepository repo;
 
-    public PlayerJoinEvent(SettingsRepository repo) {
+    public PlayerJoin(SettingsRepository repo) {
         this.repo = repo;
     }
 

@@ -39,7 +39,7 @@ public class CustomInventory implements Listener {
         int i = itemInfo.size() - 1;
         for (Map.Entry<Material, Double> entry : itemInfo.entrySet()) {
 
-            ItemMeta meta = createSlot(new ItemStack(entry.getKey()), entry.getValue());
+            ItemMeta meta = createSlot(new ItemStack(entry.getKey()), entry.getValue(), fortuneRatio);
             ItemStack itemStack = new ItemStack(entry.getKey());
             itemStack.setItemMeta(meta);
 
@@ -49,12 +49,13 @@ public class CustomInventory implements Listener {
         return inventory;
     }
 
-    private @NotNull ItemMeta createSlot(ItemStack material, Double chance) {
+    private @NotNull ItemMeta createSlot(ItemStack material, Double chance, int fortuneRatio) {
         ItemMeta itemMeta = material.getItemMeta();
         itemMeta.displayName(Component.empty());
 
         String status;
         String note;
+        String bonus = "chances x " + (fortuneRatio + 1);
         if (repo.getPlayerSettings(player.getName()).getSetting(material.getType())) {
             status = ChatColor.GREEN + "Enabled";
             note = "Right-Click to disable";
@@ -62,7 +63,6 @@ public class CustomInventory implements Listener {
             status = ChatColor.RED + "Disabled";
             note = "Left-Click to enable";
         }
-
         itemMeta.lore(List.of(Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("Drop: ").color(NamedTextColor.GRAY))
                         .append(Component.text(material.getType().toString()).color(NamedTextColor.GRAY)),
@@ -75,8 +75,9 @@ public class CustomInventory implements Listener {
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text(note).color(NamedTextColor.LIGHT_PURPLE)),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("Fortune enchantments will").color(NamedTextColor.DARK_BLUE)),
-                Component.text("   multiply the drop chances!").color(NamedTextColor.DARK_BLUE),
+                        .append(Component.text("Fortune bonus:").color(NamedTextColor.GRAY)),
+                Component.text(" \u27a5 ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text(bonus).color(NamedTextColor.GOLD)),
                 Component.empty()));
 
         return itemMeta;
