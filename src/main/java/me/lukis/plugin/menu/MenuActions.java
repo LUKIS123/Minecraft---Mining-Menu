@@ -43,7 +43,6 @@ public class MenuActions implements Listener {
             if (itemStack == null || !itemStack.hasItemMeta()) {
                 return;
             }
-
             updatePlayerSettings(player, itemStack, clickType);
 
             // refreshing the inventory menu

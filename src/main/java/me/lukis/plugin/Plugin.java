@@ -3,7 +3,7 @@ package me.lukis.plugin;
 import me.lukis.plugin.database.PlayerSettings;
 import me.lukis.plugin.database.SettingsRepository;
 import me.lukis.plugin.events.BlockBreak;
-import me.lukis.plugin.events.PlayerJoinEvent;
+import me.lukis.plugin.events.PlayerJoin;
 import me.lukis.plugin.menu.MenuActions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +18,7 @@ public class Plugin extends JavaPlugin {
         getCommand(dropMenuCommands.cmd1).setExecutor(dropMenuCommands);
 
         getServer().getPluginManager().registerEvents(new MenuActions(settingsRepository, this), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinEvent(settingsRepository), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoin(settingsRepository), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(settingsRepository), this);
     }
 

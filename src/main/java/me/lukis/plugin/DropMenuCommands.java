@@ -25,8 +25,8 @@ public class DropMenuCommands implements Listener, CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-
             CustomInventory i = new CustomInventory(plugin, repo, player);
+
             // checking if player has fortune enchantment and opening inventory
             player.openInventory(i.createInventoryMenu(player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0)));
 

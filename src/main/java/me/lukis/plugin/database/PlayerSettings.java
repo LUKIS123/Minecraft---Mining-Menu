@@ -28,9 +28,4 @@ public class PlayerSettings {
     public void setSetting(Material material, boolean enabled) {
         playerSettings.replace(material, enabled);
     }
-
-    @Override
-    public String toString() {
-        return "Settings{" + "playerSettings=" + playerSettings + '}';
-    }
 }
