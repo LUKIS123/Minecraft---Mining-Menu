@@ -46,7 +46,7 @@ public class MenuActions implements Listener {
             updatePlayerSettings(player, itemStack, clickType);
 
             // refreshing the inventory menu
-            customInventory.refreshInventoryMenu(inventory, player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0));
+            customInventory.refreshInventoryMenu(inventory, player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
         }
     }
 
