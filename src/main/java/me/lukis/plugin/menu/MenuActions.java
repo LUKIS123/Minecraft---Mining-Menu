@@ -2,8 +2,7 @@ package me.lukis.plugin.menu;
 
 import me.lukis.plugin.Plugin;
 import me.lukis.plugin.database.SettingsRepository;
-import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +36,9 @@ public class MenuActions implements Listener {
             return;
         }
 
-        if (inventoryClickEvent.getView().title().equals(Component.text(ChatColor.DARK_PURPLE + "Select your drop:"))) {
+        TextComponent guiName = (TextComponent) inventoryClickEvent.getView().title();
+
+        if (guiName.content().equalsIgnoreCase("Select your drop:")) {
             inventoryClickEvent.setCancelled(true);
 
             if (itemStack == null || !itemStack.hasItemMeta()) {

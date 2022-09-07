@@ -2,7 +2,8 @@ package me.lukis.plugin;
 
 import me.lukis.plugin.database.SettingsRepository;
 import me.lukis.plugin.menu.CustomInventory;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,15 +24,14 @@ public class DropMenuCommands implements Listener, CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             CustomInventory i = new CustomInventory(plugin, repo, player);
 
             // checking if player has fortune enchantment and opening inventory
             player.openInventory(i.createInventoryMenu(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
 
         } else {
-            sender.sendMessage(ChatColor.RED + "Only players can use this command!");
+            sender.sendMessage(Component.text("Only players can use this command!").color(NamedTextColor.RED));
         }
         return true;
     }

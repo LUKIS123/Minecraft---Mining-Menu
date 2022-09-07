@@ -20,9 +20,9 @@ import java.util.Set;
 
 public class BlockBreak implements Listener {
     private final SettingsRepository repo;
-    public Map<Material, Double> chances;
     private final Random random = new Random();
     private final Set<Material> stoneLike = new HashSet<>();
+    public Map<Material, Double> chances;
 
     public BlockBreak(SettingsRepository repo) {
         this.repo = repo;
