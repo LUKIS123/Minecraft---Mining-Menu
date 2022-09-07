@@ -37,7 +37,7 @@ public class BlockBreak implements Listener {
         Block block = event.getBlock();
 
         // setting drop chances
-        chances = ItemData.getItemInfo(player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0));
+        chances = ItemData.getItemInfo(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
 
         if (stoneLike.contains(block.getType()) &&
                 player.getInventory().getItemInMainHand().getType().toString().toLowerCase().contains("pickaxe")) {
