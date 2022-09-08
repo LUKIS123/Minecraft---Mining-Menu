@@ -6,11 +6,6 @@ Command to use:
 ```java
 /drop
 ```
-
 ![UI](./assets/pictures/menu.png)
 
-<br /><br />
 Using a pickaxe with Fortune enchantment increases the drop chance.
-
-<br /><br />
-<img src="./assets/pictures/enchantment_info.png" width=500 heigth=300>

@@ -12,10 +12,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class MenuActions implements Listener {
+public class InventoryMenuClickEvent implements Listener {
     private final SettingsRepository settingsRepository;
 
-    public MenuActions(SettingsRepository settingsRepository) {
+    public InventoryMenuClickEvent(SettingsRepository settingsRepository) {
         this.settingsRepository = settingsRepository;
     }
 
