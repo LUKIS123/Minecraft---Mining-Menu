@@ -1,6 +1,6 @@
 package me.lukis.plugin.events;
 
-import me.lukis.plugin.database.ItemData;
+import me.lukis.plugin.database.DropChances;
 import me.lukis.plugin.database.PlayerDropSettings;
 import me.lukis.plugin.database.SettingsRepository;
 import org.bukkit.Material;
@@ -35,7 +35,7 @@ public class BlockBreak implements Listener {
         Block block = event.getBlock();
 
         // setting drop chances
-        Map<Material, Double> dropChances = ItemData.getItemInfo(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
+        Map<Material, Double> dropChances = DropChances.getItemInfo(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
 
         if (stoneLikeBlocks.contains(block.getType()) &&
                 player.getInventory().getItemInMainHand().getType().toString().toLowerCase().contains("pickaxe")) {

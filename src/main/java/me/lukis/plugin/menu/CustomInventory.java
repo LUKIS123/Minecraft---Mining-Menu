@@ -1,7 +1,6 @@
 package me.lukis.plugin.menu;
 
-import me.lukis.plugin.Plugin;
-import me.lukis.plugin.database.ItemData;
+import me.lukis.plugin.database.DropChances;
 import me.lukis.plugin.database.SettingsRepository;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -29,7 +28,7 @@ public class CustomInventory implements Listener {
 
     public Inventory createInventoryMenu(int fortuneRatio) {
         // getting drop chances
-        Map<Material, Double> itemInfo = ItemData.getItemInfo(fortuneRatio);
+        Map<Material, Double> itemInfo = DropChances.getItemInfo(fortuneRatio);
 
         Inventory inventory = Bukkit.getServer().createInventory(null, 9,
                 Component.text("Select your drop:").color(NamedTextColor.DARK_PURPLE));
