@@ -1,8 +1,7 @@
 package me.lukis.plugin.menu;
 
-import me.lukis.plugin.Plugin;
 import me.lukis.plugin.database.SettingsRepository;
-import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,9 +33,8 @@ public class MenuActions implements Listener {
             return;
         }
 
-        TextComponent guiName = (TextComponent) inventoryClickEvent.getView().title();
-
-        if (guiName.content().equalsIgnoreCase("Select your drop:")) {
+        PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
+        if (plainTextComponentSerializer.serialize(inventoryClickEvent.getView().title()).equalsIgnoreCase("Select your drop:")) {
             inventoryClickEvent.setCancelled(true);
 
             if (itemStack == null || !itemStack.hasItemMeta()) {

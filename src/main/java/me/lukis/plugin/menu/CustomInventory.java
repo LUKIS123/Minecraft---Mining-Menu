@@ -61,9 +61,6 @@ public class CustomInventory implements Listener {
             note = Component.text("Left-Click to enable");
         }
 
-        status.decoration(TextDecoration.BOLD, true);
-        note.color(NamedTextColor.LIGHT_PURPLE);
-
         itemMeta.lore(List.of(Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("Drop: ").color(NamedTextColor.GRAY))
                         .append(Component.text(material.getType().toString()).color(NamedTextColor.GRAY)),
@@ -74,9 +71,9 @@ public class CustomInventory implements Listener {
                         .append(Component.text("Status: ").color(NamedTextColor.GRAY))
                         .append(status),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(note),
+                        .append(note.color(NamedTextColor.GRAY)),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("Fortune bonus:").color(NamedTextColor.GRAY)),
+                        .append(Component.text("Fortune multiplier:").color(NamedTextColor.GRAY)),
                 Component.text(" \u27a5 ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(bonus),
                 Component.empty()));

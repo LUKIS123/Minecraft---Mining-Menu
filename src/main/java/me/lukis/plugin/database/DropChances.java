@@ -6,11 +6,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class DropChances {
 
-    private static Map<Integer, Map<Material, Double>> dropChances;
+    private static final Map<Integer, Map<Material, Double>> dropChances = new LinkedHashMap<>();
 
     public static @NotNull Map<Material, Double> getItemInfo(int dropMultiplier) {
 
