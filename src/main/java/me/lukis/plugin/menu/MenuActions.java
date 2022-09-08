@@ -14,12 +14,10 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class MenuActions implements Listener {
-    private final SettingsRepository repo;
-    private final Plugin plugin;
+    private final SettingsRepository settingsRepository;
 
-    public MenuActions(SettingsRepository repo, Plugin plugin) {
-        this.repo = repo;
-        this.plugin = plugin;
+    public MenuActions(SettingsRepository settingsRepository) {
+        this.settingsRepository = settingsRepository;
     }
 
     @EventHandler
@@ -30,7 +28,7 @@ public class MenuActions implements Listener {
         ItemStack itemStack = inventoryClickEvent.getCurrentItem();
         ClickType clickType = inventoryClickEvent.getClick();
 
-        CustomInventory customInventory = new CustomInventory(plugin, repo, player);
+        CustomInventory customInventory = new CustomInventory(settingsRepository, player);
 
         if (inventory == null) {
             return;
@@ -52,6 +50,6 @@ public class MenuActions implements Listener {
     }
 
     private void updatePlayerSettings(@NotNull Player player, @NotNull ItemStack itemStack, @NotNull ClickType clickType) {
-        repo.getPlayerSettings(player.getName()).setSetting(itemStack.getType(), !clickType.isRightClick());
+        settingsRepository.getPlayerSettings(player.getName()).setDrop(itemStack.getType(), !clickType.isRightClick());
     }
 }

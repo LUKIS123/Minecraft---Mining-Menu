@@ -14,21 +14,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class DropMenuCommands implements Listener, CommandExecutor {
 
-    private final Plugin plugin;
-    private final SettingsRepository repo;
+    private final SettingsRepository settingsRepository;
 
-    public DropMenuCommands(Plugin plugin, SettingsRepository repo) {
-        this.plugin = plugin;
-        this.repo = repo;
+    public DropMenuCommands(SettingsRepository settingsRepository) {
+        this.settingsRepository = settingsRepository;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player player) {
-            CustomInventory i = new CustomInventory(plugin, repo, player);
+            CustomInventory customInventory = new CustomInventory(settingsRepository, player);
 
             // checking if player has fortune enchantment and opening inventory
-            player.openInventory(i.createInventoryMenu(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
+            player.openInventory(customInventory.createInventoryMenu(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
 
         } else {
             sender.sendMessage(Component.text("Only players can use this command!").color(NamedTextColor.RED));

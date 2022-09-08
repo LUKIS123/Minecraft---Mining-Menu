@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SettingsRepository {
-    private final Map<String, PlayerSettings> settingsMap = new HashMap<>();
+    private final Map<String, PlayerDropSettings> playerSettings = new HashMap<>();
 
-    public void addPlayerSettings(String name, PlayerSettings playerSettings) {
-        settingsMap.put(name, playerSettings);
+    public void addPlayerSettings(String name, PlayerDropSettings playerDropSettings) {
+        playerSettings.put(name, playerDropSettings);
     }
 
-    public PlayerSettings getPlayerSettings(String name) {
-        return settingsMap.get(name);
+    public PlayerDropSettings getPlayerSettings(String name) {
+        return playerSettings.get(name);
     }
 }

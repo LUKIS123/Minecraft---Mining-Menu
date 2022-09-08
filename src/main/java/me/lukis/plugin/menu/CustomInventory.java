@@ -6,6 +6,7 @@ import me.lukis.plugin.database.SettingsRepository;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -18,13 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomInventory implements Listener {
-    private final Plugin plugin;
-    private final SettingsRepository repo;
+    private final SettingsRepository settingsRepository;
     private final Player player;
 
-    public CustomInventory(Plugin plugin, SettingsRepository repo, Player player) {
-        this.plugin = plugin;
-        this.repo = repo;
+    public CustomInventory(SettingsRepository settingsRepository, Player player) {
+        this.settingsRepository = settingsRepository;
         this.player = player;
     }
 
@@ -32,7 +31,7 @@ public class CustomInventory implements Listener {
         // getting drop chances
         Map<Material, Double> itemInfo = ItemData.getItemInfo(fortuneRatio);
 
-        Inventory inventory = plugin.getServer().createInventory(null, 9,
+        Inventory inventory = Bukkit.getServer().createInventory(null, 9,
                 Component.text("Select your drop:").color(NamedTextColor.DARK_PURPLE));
 
         int i = itemInfo.size() - 1;
@@ -55,7 +54,7 @@ public class CustomInventory implements Listener {
         Component status, note;
         Component bonus = Component.text("chances x " + (fortuneRatio + 1)).color(NamedTextColor.GOLD);
 
-        if (repo.getPlayerSettings(player.getName()).getSetting(material.getType())) {
+        if (settingsRepository.getPlayerSettings(player.getName()).getDrop(material.getType())) {
             status = Component.text("Enabled").color(NamedTextColor.GREEN);
             note = Component.text("Right-Click to disable");
         } else {
