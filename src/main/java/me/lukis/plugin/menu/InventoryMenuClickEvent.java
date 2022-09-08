@@ -2,8 +2,7 @@ package me.lukis.plugin.menu;
 
 import me.lukis.plugin.Plugin;
 import me.lukis.plugin.database.SettingsRepository;
-import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,11 +13,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class MenuActions implements Listener {
+public class InventoryMenuClickEvent implements Listener {
     private final SettingsRepository repo;
     private final Plugin plugin;
 
-    public MenuActions(SettingsRepository repo, Plugin plugin) {
+    public InventoryMenuClickEvent(SettingsRepository repo, Plugin plugin) {
         this.repo = repo;
         this.plugin = plugin;
     }
@@ -37,7 +36,8 @@ public class MenuActions implements Listener {
             return;
         }
 
-        if (inventoryClickEvent.getView().title().equals(Component.text(ChatColor.DARK_PURPLE + "Select your drop:"))) {
+        PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
+        if (plainTextComponentSerializer.serialize(inventoryClickEvent.getView().title()).equalsIgnoreCase("Select your drop:")) {
             inventoryClickEvent.setCancelled(true);
 
             if (itemStack == null || !itemStack.hasItemMeta()) {
@@ -46,7 +46,7 @@ public class MenuActions implements Listener {
             updatePlayerSettings(player, itemStack, clickType);
 
             // refreshing the inventory menu
-            customInventory.refreshInventoryMenu(inventory, player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0));
+            customInventory.refreshInventoryMenu(inventory, player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
         }
     }
 

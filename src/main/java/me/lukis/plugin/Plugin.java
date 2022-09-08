@@ -4,7 +4,7 @@ import me.lukis.plugin.database.PlayerSettings;
 import me.lukis.plugin.database.SettingsRepository;
 import me.lukis.plugin.events.BlockBreak;
 import me.lukis.plugin.events.PlayerJoin;
-import me.lukis.plugin.menu.MenuActions;
+import me.lukis.plugin.menu.InventoryMenuClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,9 +15,9 @@ public class Plugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getCommand(dropMenuCommands.cmd1).setExecutor(dropMenuCommands);
+        getCommand("drop").setExecutor(dropMenuCommands);
 
-        getServer().getPluginManager().registerEvents(new MenuActions(settingsRepository, this), this);
+        getServer().getPluginManager().registerEvents(new InventoryMenuClickEvent(settingsRepository, this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(settingsRepository), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(settingsRepository), this);
     }
