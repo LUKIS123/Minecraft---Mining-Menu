@@ -1,9 +1,7 @@
 package me.lukis.plugin.menu;
 
-import me.lukis.plugin.Plugin;
 import me.lukis.plugin.database.SettingsRepository;
-import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,12 +13,10 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class MenuActions implements Listener {
-    private final SettingsRepository repo;
-    private final Plugin plugin;
+    private final SettingsRepository settingsRepository;
 
-    public MenuActions(SettingsRepository repo, Plugin plugin) {
-        this.repo = repo;
-        this.plugin = plugin;
+    public MenuActions(SettingsRepository settingsRepository) {
+        this.settingsRepository = settingsRepository;
     }
 
     @EventHandler
@@ -31,13 +27,14 @@ public class MenuActions implements Listener {
         ItemStack itemStack = inventoryClickEvent.getCurrentItem();
         ClickType clickType = inventoryClickEvent.getClick();
 
-        CustomInventory customInventory = new CustomInventory(plugin, repo, player);
+        CustomInventory customInventory = new CustomInventory(settingsRepository, player);
 
         if (inventory == null) {
             return;
         }
 
-        if (inventoryClickEvent.getView().title().equals(Component.text(ChatColor.DARK_PURPLE + "Select your drop:"))) {
+        PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
+        if (plainTextComponentSerializer.serialize(inventoryClickEvent.getView().title()).equalsIgnoreCase("Select your drop:")) {
             inventoryClickEvent.setCancelled(true);
 
             if (itemStack == null || !itemStack.hasItemMeta()) {
@@ -46,11 +43,11 @@ public class MenuActions implements Listener {
             updatePlayerSettings(player, itemStack, clickType);
 
             // refreshing the inventory menu
-            customInventory.refreshInventoryMenu(inventory, player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0));
+            customInventory.refreshInventoryMenu(inventory, player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
         }
     }
 
     private void updatePlayerSettings(@NotNull Player player, @NotNull ItemStack itemStack, @NotNull ClickType clickType) {
-        repo.getPlayerSettings(player.getName()).setSetting(itemStack.getType(), !clickType.isRightClick());
+        settingsRepository.getPlayerSettings(player.getName()).setDrop(itemStack.getType(), !clickType.isRightClick());
     }
 }

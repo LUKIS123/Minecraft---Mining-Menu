@@ -1,12 +1,11 @@
 package me.lukis.plugin.menu;
 
-import me.lukis.plugin.Plugin;
-import me.lukis.plugin.database.ItemData;
+import me.lukis.plugin.database.DropChances;
 import me.lukis.plugin.database.SettingsRepository;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -19,22 +18,20 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomInventory implements Listener {
-    private final Plugin plugin;
-    private final SettingsRepository repo;
+    private final SettingsRepository settingsRepository;
     private final Player player;
 
-    public CustomInventory(Plugin plugin, SettingsRepository repo, Player player) {
-        this.plugin = plugin;
-        this.repo = repo;
+    public CustomInventory(SettingsRepository settingsRepository, Player player) {
+        this.settingsRepository = settingsRepository;
         this.player = player;
     }
 
     public Inventory createInventoryMenu(int fortuneRatio) {
         // getting drop chances
-        Map<Material, Double> itemInfo = ItemData.getItemInfo(fortuneRatio);
+        Map<Material, Double> itemInfo = DropChances.getItemInfo(fortuneRatio);
 
-        Inventory inventory = plugin.getServer().createInventory(null, 9,
-                Component.text(ChatColor.DARK_PURPLE + "Select your drop:"));
+        Inventory inventory = Bukkit.getServer().createInventory(null, 9,
+                Component.text("Select your drop:").color(NamedTextColor.DARK_PURPLE));
 
         int i = itemInfo.size() - 1;
         for (Map.Entry<Material, Double> entry : itemInfo.entrySet()) {
@@ -53,16 +50,17 @@ public class CustomInventory implements Listener {
         ItemMeta itemMeta = material.getItemMeta();
         itemMeta.displayName(Component.empty());
 
-        String status;
-        String note;
-        String bonus = "chances x " + (fortuneRatio + 1);
-        if (repo.getPlayerSettings(player.getName()).getSetting(material.getType())) {
-            status = ChatColor.GREEN + "Enabled";
-            note = "Right-Click to disable";
+        Component status, note;
+        Component bonus = Component.text("chances x " + (fortuneRatio + 1)).color(NamedTextColor.GOLD);
+
+        if (settingsRepository.getPlayerSettings(player.getName()).getDrop(material.getType())) {
+            status = Component.text("Enabled").color(NamedTextColor.GREEN);
+            note = Component.text("Right-Click to disable");
         } else {
-            status = ChatColor.RED + "Disabled";
-            note = "Left-Click to enable";
+            status = Component.text("Disabled").color(NamedTextColor.RED);
+            note = Component.text("Left-Click to enable");
         }
+
         itemMeta.lore(List.of(Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("Drop: ").color(NamedTextColor.GRAY))
                         .append(Component.text(material.getType().toString()).color(NamedTextColor.GRAY)),
@@ -71,13 +69,13 @@ public class CustomInventory implements Listener {
                         .append(Component.text(chance * 100 + "%").color(NamedTextColor.GOLD)),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("Status: ").color(NamedTextColor.GRAY))
-                        .append(Component.text(status).decoration(TextDecoration.BOLD, true)),
+                        .append(status),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text(note).color(NamedTextColor.LIGHT_PURPLE)),
+                        .append(note.color(NamedTextColor.GRAY)),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("Fortune bonus:").color(NamedTextColor.GRAY)),
+                        .append(Component.text("Fortune multiplier:").color(NamedTextColor.GRAY)),
                 Component.text(" \u27a5 ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text(bonus).color(NamedTextColor.GOLD)),
+                        .append(bonus),
                 Component.empty()));
 
         return itemMeta;

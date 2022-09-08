@@ -1,7 +1,7 @@
 package me.lukis.plugin.events;
 
-import me.lukis.plugin.database.ItemData;
-import me.lukis.plugin.database.PlayerSettings;
+import me.lukis.plugin.database.DropChances;
+import me.lukis.plugin.database.PlayerDropSettings;
 import me.lukis.plugin.database.SettingsRepository;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,16 +19,14 @@ import java.util.Random;
 import java.util.Set;
 
 public class BlockBreak implements Listener {
-    private final SettingsRepository repo;
-    public Map<Material, Double> chances;
-    private final Random random = new Random();
-    private final Set<Material> stoneLike = new HashSet<>();
+    private final SettingsRepository settingsRepository;
+    private final Set<Material> stoneLikeBlocks = new HashSet<>();
 
-    public BlockBreak(SettingsRepository repo) {
-        this.repo = repo;
+    public BlockBreak(SettingsRepository settingsRepository) {
+        this.settingsRepository = settingsRepository;
 
-        stoneLike.add(Material.STONE);
-        stoneLike.add(Material.DEEPSLATE);
+        stoneLikeBlocks.add(Material.STONE);
+        stoneLikeBlocks.add(Material.DEEPSLATE);
     }
 
     @EventHandler
@@ -37,18 +35,18 @@ public class BlockBreak implements Listener {
         Block block = event.getBlock();
 
         // setting drop chances
-        chances = ItemData.getItemInfo(player.getInventory().getItemInMainHand().getEnchantments().getOrDefault(Enchantment.LOOT_BONUS_BLOCKS, 0));
+        Map<Material, Double> dropChances = DropChances.getItemInfo(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
 
-        if (stoneLike.contains(block.getType()) &&
+        if (stoneLikeBlocks.contains(block.getType()) &&
                 player.getInventory().getItemInMainHand().getType().toString().toLowerCase().contains("pickaxe")) {
 
             // deleting drop
             event.setDropItems(false);
             // getting player settings
-            PlayerSettings playerSettings = repo.getPlayerSettings(player.getName());
+            PlayerDropSettings playerDropSettings = settingsRepository.getPlayerSettings(player.getName());
 
-            for (Map.Entry<Material, Double> entry : chances.entrySet()) {
-                if (playerSettings.getSetting(entry.getKey()) && (random.nextInt(1000) + 1) / 1000.0 <= entry.getValue()) {
+            for (Map.Entry<Material, Double> entry : dropChances.entrySet()) {
+                if (playerDropSettings.getDrop(entry.getKey()) && (new Random().nextInt(1000) + 1) / 1000.0 <= entry.getValue()) {
 
                     if (entry.getKey().equals(Material.COBBLESTONE)) {
                         dropItem(player, block, block.getDrops().iterator().next());
