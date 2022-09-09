@@ -51,7 +51,7 @@ public class CustomInventory implements Listener {
         itemMeta.displayName(Component.empty());
 
         Component status, note;
-        Component bonus = Component.text("chances x " + (fortuneRatio + 1)).color(NamedTextColor.GOLD);
+        Component bonus = Component.text("x" + (fortuneRatio + 1)).color(NamedTextColor.GOLD);
 
         if (settingsRepository.getPlayerSettings(player.getName()).getDrop(material.getType())) {
             status = Component.text("Enabled").color(NamedTextColor.GREEN);
@@ -66,16 +66,15 @@ public class CustomInventory implements Listener {
                         .append(Component.text(material.getType().toString()).color(NamedTextColor.GRAY)),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("Chance: ").color(NamedTextColor.GRAY))
-                        .append(Component.text(chance * 100 + "%").color(NamedTextColor.GOLD)),
+                        .append(Component.text(chance * 100 + "%").color(NamedTextColor.GOLD).decoration(TextDecoration.BOLD, true)),
+                Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("Fortune multiplier: ").color(NamedTextColor.GRAY))
+                        .append(bonus),
                 Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("Status: ").color(NamedTextColor.GRAY))
-                        .append(status),
-                Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(note.color(NamedTextColor.GRAY)),
-                Component.text(" \u00bb ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("Fortune multiplier:").color(NamedTextColor.GRAY)),
+                        .append(status.decoration(TextDecoration.BOLD, true)),
                 Component.text(" \u27a5 ").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false)
-                        .append(bonus),
+                        .append(note.color(NamedTextColor.LIGHT_PURPLE)),
                 Component.empty()));
 
         return itemMeta;
