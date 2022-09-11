@@ -37,8 +37,10 @@ public class BlockBreak implements Listener {
         // setting drop chances
         Map<Material, Double> dropChances = DropChances.getItemInfo(player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
 
-        if (stoneLikeBlocks.contains(block.getType()) &&
-                player.getInventory().getItemInMainHand().getType().toString().toLowerCase().contains("pickaxe")) {
+        if (stoneLikeBlocks.contains(block.getType())
+                && player.getInventory().getItemInMainHand().getType().toString().toLowerCase().contains("pickaxe")
+                && !player.getInventory().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH)
+        ) {
 
             // deleting drop
             event.setDropItems(false);
