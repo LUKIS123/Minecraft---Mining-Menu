@@ -9,12 +9,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Plugin extends JavaPlugin {
-    private final SettingsRepository settingsRepository = new SettingsRepository();
-    private final DropMenuCommands dropMenuCommands = new DropMenuCommands(settingsRepository);
+public class MiningMenu extends JavaPlugin {
+
+    private SettingsRepository settingsRepository;
+    private DropMenuCommands dropMenuCommands;
 
     @Override
     public void onEnable() {
+        settingsRepository = new SettingsRepository();
+        dropMenuCommands = new DropMenuCommands(settingsRepository);
+
         getCommand("drop").setExecutor(dropMenuCommands);
 
         getServer().getPluginManager().registerEvents(new InventoryMenuClickEvent(settingsRepository), this);
