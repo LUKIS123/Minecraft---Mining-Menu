@@ -27,16 +27,8 @@ public class MiningMenu extends JavaPlugin {
     @Override
     public void onDisable() {
         settingsRepository.writeDataToJson();
-        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + getPlugin(this.getClass()).getName() + "is saving the players setting!");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + getPlugin(this.getClass()).getName() + " is saving the players settings!");
     }
-
-//    @Override
-//    public void onLoad() {
-//        Bukkit.getOnlinePlayers().forEach(player -> {
-//            settingsRepository.addPlayerSettings(player.getName(), new PlayerDropSettings());
-//            player.sendMessage(ChatColor.RED + "Drop settings have been set to default!");
-//        });
-//    }
 
     @Override
     public void onLoad() {
@@ -45,9 +37,8 @@ public class MiningMenu extends JavaPlugin {
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (settingsRepository.getPlayerSettings(player.getName()) == null) {
                 settingsRepository.addPlayerSettings(player.getName(), new PlayerDropSettings());
-                player.sendMessage(ChatColor.RED + "Drop settings have been set to default!");
+                player.sendMessage(ChatColor.RED + "Your drop settings have been set to default!");
             }
         });
     }
-
 }
