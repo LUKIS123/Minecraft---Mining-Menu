@@ -1,4 +1,4 @@
-package me.lukis.plugin.database;
+package me.lukis.plugin.database.models;
 
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Material;
@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class DropChances {
-
     private static final Map<Integer, Map<Material, Double>> dropChances = new LinkedHashMap<>();
 
     public static @NotNull Map<Material, Double> getItemInfo(int dropMultiplier) {

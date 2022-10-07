@@ -1,4 +1,4 @@
-package me.lukis.plugin.database;
+package me.lukis.plugin.database.models;
 
 import org.bukkit.Material;
 
@@ -27,5 +27,16 @@ public class PlayerDropSettings {
 
     public void setDrop(Material material, boolean enabled) {
         dropSettings.replace(material, enabled);
+    }
+
+    public Map<Material, Boolean> getDropSettings() {
+        return dropSettings;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerDropSettings{" +
+                "dropSettings=" + dropSettings +
+                '}';
     }
 }

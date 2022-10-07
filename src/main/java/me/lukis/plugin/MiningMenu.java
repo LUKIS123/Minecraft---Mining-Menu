@@ -1,7 +1,7 @@
 package me.lukis.plugin;
 
-import me.lukis.plugin.database.PlayerDropSettings;
-import me.lukis.plugin.database.SettingsRepository;
+import me.lukis.plugin.database.models.PlayerDropSettings;
+import me.lukis.plugin.database.repositories.SettingsRepository;
 import me.lukis.plugin.events.BlockBreak;
 import me.lukis.plugin.events.PlayerJoin;
 import me.lukis.plugin.menu.InventoryMenuClickEvent;
@@ -11,13 +11,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MiningMenu extends JavaPlugin {
 
-    private SettingsRepository settingsRepository;
-    private DropMenuCommands dropMenuCommands;
+    private final SettingsRepository settingsRepository = new SettingsRepository();
 
     @Override
     public void onEnable() {
-        settingsRepository = new SettingsRepository();
-        dropMenuCommands = new DropMenuCommands(settingsRepository);
+        DropMenuCommands dropMenuCommands = new DropMenuCommands(settingsRepository);
 
         getCommand("drop").setExecutor(dropMenuCommands);
 
@@ -27,10 +25,29 @@ public class MiningMenu extends JavaPlugin {
     }
 
     @Override
+    public void onDisable() {
+        settingsRepository.writeDataToJson();
+        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + getPlugin(this.getClass()).getName() + "is saving the players setting!");
+    }
+
+//    @Override
+//    public void onLoad() {
+//        Bukkit.getOnlinePlayers().forEach(player -> {
+//            settingsRepository.addPlayerSettings(player.getName(), new PlayerDropSettings());
+//            player.sendMessage(ChatColor.RED + "Drop settings have been set to default!");
+//        });
+//    }
+
+    @Override
     public void onLoad() {
+        settingsRepository.readDataFromJson();
+
         Bukkit.getOnlinePlayers().forEach(player -> {
-            settingsRepository.addPlayerSettings(player.getName(), new PlayerDropSettings());
-            player.sendMessage(ChatColor.RED + "Drop settings have been set to default!");
+            if (settingsRepository.getPlayerSettings(player.getName()) == null) {
+                settingsRepository.addPlayerSettings(player.getName(), new PlayerDropSettings());
+                player.sendMessage(ChatColor.RED + "Drop settings have been set to default!");
+            }
         });
     }
+
 }

@@ -1,6 +1,6 @@
 package me.lukis.plugin;
 
-import me.lukis.plugin.database.SettingsRepository;
+import me.lukis.plugin.database.repositories.SettingsRepository;
 import me.lukis.plugin.menu.CustomInventory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

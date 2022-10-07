@@ -1,6 +1,6 @@
 package me.lukis.plugin.menu;
 
-import me.lukis.plugin.database.SettingsRepository;
+import me.lukis.plugin.database.repositories.SettingsRepository;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;

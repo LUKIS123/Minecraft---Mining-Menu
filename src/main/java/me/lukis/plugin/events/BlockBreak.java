@@ -1,8 +1,8 @@
 package me.lukis.plugin.events;
 
-import me.lukis.plugin.database.DropChances;
-import me.lukis.plugin.database.PlayerDropSettings;
-import me.lukis.plugin.database.SettingsRepository;
+import me.lukis.plugin.database.models.DropChances;
+import me.lukis.plugin.database.models.PlayerDropSettings;
+import me.lukis.plugin.database.repositories.SettingsRepository;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;

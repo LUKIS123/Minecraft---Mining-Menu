@@ -1,7 +1,7 @@
 package me.lukis.plugin.menu;
 
-import me.lukis.plugin.database.DropChances;
-import me.lukis.plugin.database.SettingsRepository;
+import me.lukis.plugin.database.models.DropChances;
+import me.lukis.plugin.database.repositories.SettingsRepository;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
