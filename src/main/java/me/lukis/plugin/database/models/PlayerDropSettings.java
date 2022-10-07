@@ -29,10 +29,6 @@ public class PlayerDropSettings {
         dropSettings.replace(material, enabled);
     }
 
-    public Map<Material, Boolean> getDropSettings() {
-        return dropSettings;
-    }
-
     @Override
     public String toString() {
         return "PlayerDropSettings{" +
