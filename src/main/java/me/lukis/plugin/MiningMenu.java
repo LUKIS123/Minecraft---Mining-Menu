@@ -10,13 +10,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MiningMenu extends JavaPlugin {
-
-    private final SettingsRepository settingsRepository = new SettingsRepository();
+    private final SettingsRepository settingsRepository = new SettingsRepository("player-drop-settings.json");
 
     @Override
     public void onEnable() {
         DropMenuCommands dropMenuCommands = new DropMenuCommands(settingsRepository);
-
         getCommand("drop").setExecutor(dropMenuCommands);
 
         getServer().getPluginManager().registerEvents(new InventoryMenuClickEvent(settingsRepository), this);
@@ -27,17 +25,18 @@ public class MiningMenu extends JavaPlugin {
     @Override
     public void onDisable() {
         settingsRepository.writeDataToJson();
-        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + getPlugin(this.getClass()).getName() + " is saving the players settings!");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + getPlugin(this.getClass()).getName() + " saved the players settings!");
     }
 
     @Override
     public void onLoad() {
         settingsRepository.readDataFromJson();
+        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + getPlugin(this.getClass()).getName() + " loaded the players settings!");
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (settingsRepository.getPlayerSettings(player.getName()) == null) {
                 settingsRepository.addPlayerSettings(player.getName(), new PlayerDropSettings());
-                player.sendMessage(ChatColor.RED + "Your drop settings have been set to default!");
+                player.sendMessage(ChatColor.DARK_PURPLE + "Your drop settings have been set to default!");
             }
         });
     }

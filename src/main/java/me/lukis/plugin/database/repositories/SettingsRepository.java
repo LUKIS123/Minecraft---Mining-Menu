@@ -14,7 +14,12 @@ import java.util.Map;
 
 public class SettingsRepository {
     private Map<String, PlayerDropSettings> playerSettings = new HashMap<>();
-    File file = new File("player-drop-settings.json");
+    File file;
+
+    public SettingsRepository(String filename) {
+        this.file = new File(filename);
+    }
+
     private final Gson gson = new Gson();
 
     public void addPlayerSettings(String name, PlayerDropSettings playerDropSettings) {

@@ -17,7 +17,7 @@ public class PlayerJoin implements Listener {
     public void onJoin(org.bukkit.event.player.PlayerJoinEvent playerJoinEvent) {
         if (settingsRepository.getPlayerSettings(playerJoinEvent.getPlayer().getName()) == null) {
             settingsRepository.addPlayerSettings(playerJoinEvent.getPlayer().getName(), new PlayerDropSettings());
-            playerJoinEvent.getPlayer().sendMessage(ChatColor.RED + "Your drop settings have been set to default!");
+            playerJoinEvent.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "Your drop settings have been set to default!");
         }
     }
 }
