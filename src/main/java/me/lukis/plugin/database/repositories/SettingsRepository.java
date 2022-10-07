@@ -2,6 +2,7 @@ package me.lukis.plugin.database.repositories;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import me.lukis.plugin.database.models.PlayerDropSettings;
 
 import java.io.File;
@@ -20,7 +21,7 @@ public class SettingsRepository {
         this.file = new File(filename);
     }
 
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
 
     public void addPlayerSettings(String name, PlayerDropSettings playerDropSettings) {
         playerSettings.put(name, playerDropSettings);
