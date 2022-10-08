@@ -1,4 +1,4 @@
-package me.lukis.plugin.database.models;
+package me.lukis.plugin.data.models;
 
 import org.bukkit.Material;
 
