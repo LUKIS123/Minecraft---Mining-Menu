@@ -4,6 +4,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.lukis.plugin.data.models.PlayerDropSettings;
+import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SettingsRepository {
-    private Map<String, PlayerDropSettings> playerSettings = new HashMap<>();
+    private final Map<String, PlayerDropSettings> playerSettings = new HashMap<>();
     private final File file;
 
     public SettingsRepository(String filename) {
@@ -31,31 +32,25 @@ public class SettingsRepository {
         return playerSettings.get(name);
     }
 
-    public void writeData() {
+    public void save() {
         try {
-            if (!file.exists()) {
-                file.createNewFile();
-            }
+            file.createNewFile();
+
             FileWriter writer = new FileWriter(file);
             gson.toJson(playerSettings, writer);
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Bukkit.getLogger().severe("MiningMenu could not save players drop settings!");
         }
     }
 
     @SuppressWarnings("Unchecked")
-    public void readData() {
+    public void load() {
         Type mapType = new TypeToken<Map<String, PlayerDropSettings>>() {}.getType();
         try (FileReader reader = new FileReader(file)) {
-            Map<String, PlayerDropSettings> readMap = gson.fromJson(reader, mapType);
-            if (playerSettings != null) {
-                playerSettings.putAll(readMap);
-            } else {
-                playerSettings = readMap;
-            }
+            playerSettings.putAll(gson.fromJson(reader, mapType));
         } catch (IOException e) {
-            e.printStackTrace();
+            Bukkit.getLogger().severe("MiningMenu could not load players drop settings!");
         }
     }
 }

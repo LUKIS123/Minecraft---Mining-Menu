@@ -17,7 +17,7 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(org.bukkit.event.player.PlayerJoinEvent playerJoinEvent) {
         if (settingsRepository.getPlayerSettings(playerJoinEvent.getPlayer().getName()) == null) {
             settingsRepository.addPlayerSettings(playerJoinEvent.getPlayer().getName(), new PlayerDropSettings());
-            playerJoinEvent.getPlayer().sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&6Your &cdrop &6settings have been set to default!"));
+            playerJoinEvent.getPlayer().sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&6Your &cdrop settings &6have been set to default!"));
         }
     }
 }

@@ -24,19 +24,19 @@ public class MiningMenu extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        settingsRepository.writeData();
-        getLogger().info("Saving the players settings!");
+        settingsRepository.save();
+        getLogger().info("Saved the players settings!");
     }
 
     @Override
     public void onLoad() {
-        settingsRepository.readData();
-        getLogger().info("Loading the players settings!");
+        settingsRepository.load();
+        getLogger().info("Loaded the players settings!");
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (settingsRepository.getPlayerSettings(player.getName()) == null) {
                 settingsRepository.addPlayerSettings(player.getName(), new PlayerDropSettings());
-                player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&6Your &cdrop &6settings have been set to default!"));
+                player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&6Your &cdrop settings &6have been set to default!"));
             }
         });
     }
