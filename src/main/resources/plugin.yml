@@ -1,7 +1,7 @@
 name: MiningMenu
-main: me.lukis.plugin.Plugin
+main: me.lukis.plugin.MiningMenu
 api-version: 1.19
-version: 2.2.2
+version: 2.3
 description: Plugin for menu enabling different random drops
 
 commands:

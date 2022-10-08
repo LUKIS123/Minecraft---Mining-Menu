@@ -1,6 +1,6 @@
 package me.lukis.plugin;
 
-import me.lukis.plugin.database.SettingsRepository;
+import me.lukis.plugin.data.repositories.SettingsRepository;
 import me.lukis.plugin.menu.CustomInventory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-public class DropMenuCommands implements Listener, CommandExecutor {
+public class DropMenuCommandExecutor implements Listener, CommandExecutor {
 
     private final SettingsRepository settingsRepository;
 
-    public DropMenuCommands(SettingsRepository settingsRepository) {
+    public DropMenuCommandExecutor(SettingsRepository settingsRepository) {
         this.settingsRepository = settingsRepository;
     }
 

@@ -1,8 +1,8 @@
-package me.lukis.plugin.events;
+package me.lukis.plugin.eventlisteners;
 
-import me.lukis.plugin.database.DropChances;
-import me.lukis.plugin.database.PlayerDropSettings;
-import me.lukis.plugin.database.SettingsRepository;
+import me.lukis.plugin.data.models.DropChances;
+import me.lukis.plugin.data.models.PlayerDropSettings;
+import me.lukis.plugin.data.repositories.SettingsRepository;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -18,11 +18,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-public class BlockBreak implements Listener {
+public class BlockBreakListener implements Listener {
     private final SettingsRepository settingsRepository;
     private final Set<Material> stoneLikeBlocks = new HashSet<>();
 
-    public BlockBreak(SettingsRepository settingsRepository) {
+    public BlockBreakListener(SettingsRepository settingsRepository) {
         this.settingsRepository = settingsRepository;
 
         stoneLikeBlocks.add(Material.STONE);
