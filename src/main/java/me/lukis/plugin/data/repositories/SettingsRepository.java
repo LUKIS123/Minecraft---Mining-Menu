@@ -16,13 +16,12 @@ import java.util.Map;
 
 public class SettingsRepository {
     private final Map<String, PlayerDropSettings> playerSettings = new HashMap<>();
+    private final Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
     private final File file;
 
     public SettingsRepository(String filename) {
         this.file = new File(filename);
     }
-
-    private final Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
 
     public void addPlayerSettings(String name, PlayerDropSettings playerDropSettings) {
         playerSettings.put(name, playerDropSettings);
